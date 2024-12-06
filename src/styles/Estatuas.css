@@ -1,0 +1,27 @@
+/* src/components/About.css */
+
+.estatuas {
+    padding: 2rem 1rem;
+    max-width: 800px;
+    margin: auto;
+    line-height: 1.8;
+  }
+  
+  .estatuas h2 {
+    font-size: 2rem;
+    color: #005f73;
+    margin-bottom: 1rem;
+  }
+  
+  .estatuas p {
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    color: #333;
+  }
+  
+  .full-image {
+    width: 100%;
+    height: auto;
+    margin-top: 1rem;
+  }
+  

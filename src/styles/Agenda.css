@@ -1,0 +1,28 @@
+/* src/styles/Agenda.css */
+
+.agenda {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.agenda form {
+  display: flex;
+  flex-direction: column;
+}
+
+.agenda label {
+  margin-top: 10px;
+}
+
+.agenda input {
+  padding: 8px;
+  margin-top: 5px;
+}
+
+.agenda button {
+  margin-top: 20px;
+  padding: 10px;
+}
+
+  

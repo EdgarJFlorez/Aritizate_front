@@ -1,0 +1,61 @@
+/* Barra de Navegación */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #005f73;
+  color: white;
+  padding: 1rem 2rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra para separar visualmente */
+}
+
+.profile-photo {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.nav-links {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between; /* Alinea los enlaces */
+  align-items: center;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links a,
+.nav-links .btn {
+  color: white;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  background-color: #0a9396;
+  border-radius: 5px;
+  flex: 1; /* Distribuye el espacio uniformemente */
+  text-align: center;
+  white-space: nowrap; /* Evita que los textos largos se rompan */
+  transition: background-color 0.3s ease; /* Efecto de hover suave */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+}
+
+.nav-links a:hover,
+.nav-links .btn:hover {
+  background-color: #94d2bd;
+}
+
+.nav-links .btn {
+  cursor: pointer;
+}
+
+
+
+  

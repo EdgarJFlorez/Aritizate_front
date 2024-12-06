@@ -1,0 +1,19 @@
+/* src/components/Home.css */
+
+.home {
+    text-align: center;
+    padding: 2rem;
+  }
+  
+  .home h2 {
+    font-size: 2rem;
+    color: #005f73;
+    margin-bottom: 1rem;
+  }
+  
+  .home .slogan {
+    font-size: 1.5rem;
+    font-style: italic;
+    color: #0a9396;
+  }
+  

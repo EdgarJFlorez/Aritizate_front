@@ -1,0 +1,45 @@
+/* src/styles/Auth.css */
+
+.auth-page {
+    text-align: center;
+  }
+  
+  .auth-form {
+    display: inline-block;
+    text-align: left;
+    margin-top: 20px;
+    margin-bottom: 50px;
+  }
+  
+  .auth-form h2 {
+    text-align: center;
+  }
+  
+  .auth-form form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .auth-form label {
+    margin-top: 10px;
+  }
+  
+  .auth-form input {
+    padding: 8px;
+    margin-top: 5px;
+    width: 300px;
+  }
+  
+  .auth-form button {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #0a9396;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .auth-form button:hover {
+    background-color: #007f81;
+  }
+  

@@ -1,0 +1,36 @@
+/* src/components/Footer.css */
+
+/* Estilos para el pie de página */
+.footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #005f73;
+    color: white;
+    padding: 1rem 2rem;
+    font-size: 0.9rem;
+    margin-top: auto;
+  }
+  
+  .footer-left {
+    flex: 1;
+    text-align: left;
+  }
+  
+  .footer-center {
+    flex: 1;
+    text-align: center;
+  }
+  
+  .footer-right {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+  }
+  
+  .social-icon {
+    width: 24px;
+    height: 24px;
+  }
+  

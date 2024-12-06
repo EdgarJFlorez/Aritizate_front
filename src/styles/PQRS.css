@@ -1,0 +1,54 @@
+/* src/styles/PQRS.css */
+
+.pqrs {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.pqrs h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.pqrs p {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.pqrs form {
+  display: flex;
+  flex-direction: column;
+}
+
+.pqrs label {
+  margin-top: 10px;
+}
+
+.pqrs input,
+.pqrs select,
+.pqrs textarea {
+  padding: 8px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.pqrs textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.pqrs button {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #0a9396; /* Puedes cambiar el color según tu preferencia */
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.pqrs button:hover {
+  background-color: #007f81; /* Color al pasar el cursor */
+}

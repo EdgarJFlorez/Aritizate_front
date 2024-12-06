@@ -1,0 +1,50 @@
+/* src/styles/LandingPage.css */
+
+.landing-page {
+  text-align: center;
+}
+  
+  .login-container {
+    display: inline-block;
+    text-align: left;
+    margin-top: 20px;
+    margin-bottom: 50px;
+  }
+  
+  .login-container h2 {
+    text-align: center;
+  }
+  
+  .login-container form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .login-container label {
+    margin-top: 10px;
+  }
+  
+  .login-container input {
+    padding: 8px;
+    margin-top: 5px;
+    width: 300px;
+  }
+  
+  .login-container button {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #0a9396;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .login-container button:hover {
+    background-color: #007f81;
+  }
+  
+  .login-container p {
+    text-align: center;
+    margin-top: 15px;
+  }
+  
