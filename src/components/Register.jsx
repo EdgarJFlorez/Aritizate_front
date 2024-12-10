@@ -1,8 +1,7 @@
-// src/components/Register.js
-
 import React, { useState } from 'react';
 import '../styles/Auth.css';
 import Hero from './Hero';
+import API from '../api/axios'; // Asegúrate de importar la instancia Axios configurada
 
 function Register() {
   const [formData, setFormData] = useState({
@@ -18,11 +17,17 @@ function Register() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Lógica para registrar al usuario
-    console.log('Datos de registro:', formData);
-    alert('Registro exitoso. Ahora puedes iniciar sesión.');
+    try {
+      const response = await API.post('/auth/register', formData);
+      alert(response.data); // "Usuario registrado con éxito"
+      // Redirige al usuario a la página de inicio de sesión:
+      window.location.href = '/'; 
+    } catch (error) {
+      console.error('Error al registrar usuario:', error);
+      alert('No se pudo registrar el usuario. Revisa la consola para más detalles.');
+    }
   };
 
   return (
@@ -45,3 +50,4 @@ function Register() {
 }
 
 export default Register;
+

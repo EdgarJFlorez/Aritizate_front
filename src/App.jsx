@@ -1,5 +1,3 @@
-// src/App.jsx
-
 import React, { useState } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import './App.css';
@@ -7,7 +5,6 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import MainLayout from './components/MainLayout';
 
-// Importa tus componentes
 import LandingPage from './components/LandingPage';
 import Home from './components/Home';
 import Estatuas from './components/Estatuas';
@@ -16,26 +13,31 @@ import PQRS from './components/PQRS';
 import Register from './components/Register';
 import NotFound from './components/NotFound';
 import PrivateRoute from './components/PrivateRoute';
+import API from './api/axios';
 
+// Importa el componente ForgotPassword
+import ForgotPassword from './components/ForgotPassword';
 
 function App() {
-  // Estado para manejar si el usuario está autenticado
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  // Funciones para manejar el login y logout
-  const handleLogin = (e) => {
-    e.preventDefault();
-    // Aquí puedes agregar lógica de autenticación real
-    setIsAuthenticated(true);
+  const handleLogin = async (loginData) => {
+    try {
+      const response = await API.post('/auth/login', loginData);
+      alert(response.data); // "Inicio de sesión exitoso"
+      setIsAuthenticated(true);
+    } catch (error) {
+      console.error('Error al iniciar sesión:', error);
+      alert('Credenciales incorrectas');
+    }
   };
+
   const handleLogout = () => setIsAuthenticated(false);
 
   return (
     <div className="App">
-      {/* Mostrar el Navbar solo si el usuario está autenticado */}
       {isAuthenticated && <Navbar handleLogout={handleLogout} />}
       <Routes>
-        {/* Rutas públicas */}
         {!isAuthenticated && (
           <>
             <Route
@@ -43,20 +45,15 @@ function App() {
               element={<LandingPage handleLogin={handleLogin} />}
             />
             <Route path="/register" element={<Register />} />
-            {/* Redirigir cualquier otra ruta a la página de inicio */}
+            {/* Nueva ruta para el flujo de olvido de contraseña */}
+            <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </>
         )}
 
-        {/* Rutas protegidas */}
         {isAuthenticated && (
           <>
-            {/* Redirigir raíz autenticada a /home */}
-            <Route
-              path="/"
-              element={<Navigate to="/home" replace />}
-            />
-            {/* Ruta Home - mostrar foto */}
+            <Route path="/" element={<Navigate to="/home" replace />} />
             <Route
               path="/home"
               element={
@@ -65,7 +62,6 @@ function App() {
                 </MainLayout>
               }
             />
-            {/* Ruta Estatuas */}
             <Route
               path="/estatuas"
               element={
@@ -74,7 +70,6 @@ function App() {
                 </MainLayout>
               }
             />
-            {/* Ruta Agenda tu cita */}
             <Route
               path="/agenda"
               element={
@@ -83,7 +78,6 @@ function App() {
                 </MainLayout>
               }
             />
-            {/* Ruta PQRS */}
             <Route
               path="/pqrs"
               element={
@@ -102,7 +96,6 @@ function App() {
                 </PrivateRoute>
               }
             />
-            {/* Ruta para páginas no encontradas */}
             <Route path="*" element={<NotFound />} />
           </>
         )}
@@ -113,6 +106,7 @@ function App() {
 }
 
 export default App;
+
 
 
 
