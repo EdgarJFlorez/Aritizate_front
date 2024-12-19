@@ -1,50 +1,78 @@
-// src/components/ChatBotBubble.js
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import '../styles/ChatBotBubble.css';
+import { sendMessageToLMStudio } from '../api/lmstudioService'; // Importar servicio de LM Studio
+import { Link } from 'react-router-dom';
 
 const ChatBotBubble = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState([
-    { sender: 'bot', text: '¡Hola! Estoy aquí para ayudarte. ¿En qué puedo asistirte?' },
-  ]);
+  const [messages, setMessages] = useState([]);
   const [inputValue, setInputValue] = useState('');
-  const [bubbleColor, setBubbleColor] = useState('#0a9396'); // Color predeterminado (verde)
+  const [bubbleColor, setBubbleColor] = useState('#0a9396');
+  const chatBodyRef = useRef(null); // Referencia para el contenedor desplazable
 
   useEffect(() => {
-    // Detectar el color de fondo de la página y ajustar el color de la burbuja
     const bodyBgColor = window.getComputedStyle(document.body).backgroundColor;
-
-    const isLight = isBackgroundLight(bodyBgColor);
-    setBubbleColor(isLight ? '#0a9396' : '#ffffff'); // Verde si el fondo es claro, blanco si es oscuro
+    setBubbleColor(isBackgroundLight(bodyBgColor) ? '#0a9396' : '#ffffff');
   }, []);
 
   const isBackgroundLight = (bgColor) => {
-    // Convertir el color de fondo en RGB y evaluar su luminosidad
     const rgb = bgColor.match(/\d+/g);
-    if (!rgb) return true; // Por defecto, asumimos que es claro si no se puede calcular
+    if (!rgb) return true;
     const brightness = (299 * rgb[0] + 587 * rgb[1] + 114 * rgb[2]) / 1000;
-    return brightness > 127.5; // Umbral de luminosidad
+    return brightness > 127.5;
   };
 
-  const toggleChat = () => setIsOpen(!isOpen);
+  const toggleChat = () => {
+    setIsOpen(!isOpen);
+
+    // Añadir mensaje de bienvenida si el chat se abre
+    if (!isOpen) {
+      setMessages([
+        { sender: 'bot', text: 'Bienvenido, soy tu asistente virtual, Ari. ¿En qué te puedo ayudar?' },
+      ]);
+    }
+  };
 
   const handleInputChange = (e) => setInputValue(e.target.value);
 
-  const handleSendMessage = () => {
-    if (!inputValue.trim()) return;
+  const handleSendMessage = async (message) => {
+    const userMessage = { sender: 'user', text: message || inputValue };
+    setMessages((prev) => [...prev, userMessage]);
 
-    const newMessages = [
-      ...messages,
-      { sender: 'user', text: inputValue },
-      { sender: 'bot', text: 'Gracias por tu mensaje. Estoy procesando...' },
-    ];
-    setMessages(newMessages);
+    try {
+      // Llamada a LM Studio para obtener la respuesta
+      const botReply = await sendMessageToLMStudio(userMessage.text);
+
+      const botMessage = {
+        sender: 'bot',
+        text: botReply,
+      };
+      setMessages((prev) => [...prev, botMessage]);
+    } catch (error) {
+      setMessages((prev) => [
+        ...prev,
+        { sender: 'bot', text: 'Lo siento, hubo un error al procesar tu pregunta.' },
+      ]);
+    }
+
     setInputValue('');
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault(); // Evita el comportamiento por defecto del Enter
+      handleSendMessage();
+    }
+  };
+
+  useEffect(() => {
+    if (chatBodyRef.current) {
+      chatBodyRef.current.scrollTop = chatBodyRef.current.scrollHeight;
+    }
+  }, [messages]);
+
   return (
     <div className="chat-bot-container">
-      {/* Burbuja de notificación */}
       <div
         className="chat-bubble"
         onClick={toggleChat}
@@ -56,20 +84,21 @@ const ChatBotBubble = () => {
         💬
       </div>
 
-      {/* Ventana del chatbot */}
       {isOpen && (
         <div className="chat-window">
           <div className="chat-header">
             <h4>ChatBot</h4>
             <button onClick={toggleChat}>✖</button>
           </div>
-          <div className="chat-body">
+          <div className="chat-body" ref={chatBodyRef}>
             {messages.map((msg, index) => (
-              <div
-                key={index}
-                className={`chat-message ${msg.sender === 'bot' ? 'bot' : 'user'}`}
-              >
+              <div key={index} className={`chat-message ${msg.sender === 'bot' ? 'bot' : 'user'}`}>
                 {msg.text}
+                {msg.link && (
+                  <Link to={msg.link.url} className="chat-link">
+                    {msg.link.text}
+                  </Link>
+                )}
               </div>
             ))}
           </div>
@@ -79,8 +108,9 @@ const ChatBotBubble = () => {
               placeholder="Escribe tu mensaje..."
               value={inputValue}
               onChange={handleInputChange}
+              onKeyDown={handleKeyDown} // Detecta la tecla Enter
             />
-            <button onClick={handleSendMessage}>Enviar</button>
+            <button onClick={() => handleSendMessage()}>Enviar</button>
           </div>
         </div>
       )}
@@ -89,4 +119,8 @@ const ChatBotBubble = () => {
 };
 
 export default ChatBotBubble;
+
+
+
+
 
